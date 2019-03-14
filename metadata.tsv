@@ -1,0 +1,7 @@
+sample	batch	condition
+DEBrowser/Untreated_1	Single	Untreated
+DEBrowser/Untreated_3	Paired	Untreated
+DEBrowser/Untreated_4	Paired	Untreated
+DEBrowser/RNAi_1	Single	RNAi
+DEBrowser/RNAi_3	Paired	RNAi
+DEBrowser/RNAi_4	Paired	RNAi

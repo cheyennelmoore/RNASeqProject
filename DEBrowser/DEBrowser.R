@@ -14,7 +14,7 @@ library(debrowser)
 
 if (!require("tidyverse")) install.packages("tidyverse"); library(tidyverse)
 
-genefilelist <- list.files(path="SARTools", pattern="*.genes.tsv", full.names=T)
+genefilelist <- list.files(path="DEBrowser", pattern="*.genes.tsv", full.names=T)
 genefiles <- lapply(genefilelist, read_tsv)
 samplenames <- gsub("SARTools/S2_DRSC_CG8144_", "", genefilelist)
 samplenames <- gsub("SARTools/S2_DRSC_","", samplenames)
@@ -25,19 +25,20 @@ samplenames
 genefiles
 genefiles %>%
   bind_cols() %>%
-  select(Name, starts_with("NumReads")) -> genetable
+  select(gene_id, starts_with("FPKM")) -> genetable 
 colnames(genetable)[2:7] <- as.list(samplenames)
 
 head(genetable)
 write_tsv(genetable, path="genetable.tsv")
 
-transcriptfilelist <- list.files(path="SARTools", pattern="*.transcripts.tsv", full.names=T)
+transcriptfilelist <- list.files(path="DEBrowser", pattern="*.transcripts.tsv", full.names=T)
 transcriptfiles <- lapply(transcriptfilelist, read_tsv)
 
 transcriptfiles %>%
   bind_cols() %>%
-  select(Name, starts_with("NumReads")) -> transcripttable
+  select(transcript_id, starts_with("FPKM")) -> transcripttable
 colnames(transcripttable)[2:7] <- as.list(samplenames)
+
 
 head(transcripttable)
 str(transcripttable)
