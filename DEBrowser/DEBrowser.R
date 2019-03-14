@@ -36,7 +36,7 @@ transcriptfiles <- lapply(transcriptfilelist, read_tsv)
 
 transcriptfiles %>%
   bind_cols() %>%
-  select(transcript_id, starts_with("FPKM")) -> transcripttable
+  select(gene_id, starts_with("FPKM")) -> transcripttable
 colnames(transcripttable)[2:7] <- as.list(samplenames)
 
 
