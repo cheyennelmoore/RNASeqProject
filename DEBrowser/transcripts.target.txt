@@ -1,0 +1,7 @@
+label	files	batch	Treatment
+Ctrl1	Untreated_1.transcripts.tsv	Single	Untreated
+Ctrl3	Untreated_3.transcripts.tsv	Paired	Untreated
+Ctrl4	Untreated_4.transcripts.tsv	Paired	Untreated
+RNAi1	RNAi_1.transcripts.tsv	Single	RNAi
+RNAi3	RNAi_3.transcripts.tsv	Paired	RNAi
+RNAi4	RNAi_4.transcripts.tsv	Paired	RNAi
