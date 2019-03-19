@@ -14,39 +14,31 @@ library(debrowser)
 
 if (!require("tidyverse")) install.packages("tidyverse"); library(tidyverse)
 
-# List the count files. You may need to change the path and pattern to match your files.
 genefilelist <- list.files(path="SARTools", pattern="*.genes.tsv", full.names=T)
-print(genefilelist)
 genefiles <- lapply(genefilelist, read_tsv)
-
-# Use grep to change the file names into shorter sample names
 samplenames <- gsub("SARTools/S2_DRSC_CG8144_", "", genefilelist)
 samplenames <- gsub("SARTools/S2_DRSC_","", samplenames)
 samplenames <- gsub(".genes.tsv", "", samplenames)
 samplenames <- gsub("-","_", samplenames) # DEBrowser doesn't like -
 samplenames
 
-# Reformat the gene files into a single data frame
+
 genefiles
 genefiles %>%
   bind_cols() %>%
-  select(Name, starts_with("NumReads")) -> genetable
+  select(gene_id, starts_with("expected_count")) -> genetable
+colnames(genetable)[2:7] <- as.list(samplenames) 
 
-# Rename the columns of the genetable to match the sample names
-colnames(genetable)[2:7] <- as.list(samplenames)
 
-# Check the genetable and save it
 head(genetable)
 write_tsv(genetable, path="genetable.tsv")
-
-### Now repeat all of that for the transcript files
 
 transcriptfilelist <- list.files(path="SARTools", pattern="*.transcripts.tsv", full.names=T)
 transcriptfiles <- lapply(transcriptfilelist, read_tsv)
 
 transcriptfiles %>%
   bind_cols() %>%
-  select(Name, starts_with("NumReads")) -> transcripttable
+  select(transcript_id, starts_with("expected_count")) -> transcripttable
 colnames(transcripttable)[2:7] <- as.list(samplenames)
 
 head(transcripttable)
@@ -90,5 +82,3 @@ startDEBrowser()
 #2 Filter and batch correct as above
 #3 Run the appropriate DE Analysis 
 #4 Go to the Tables and sort by log10padjust search for FBgn0261552 - this is the *pasilla* gene
-
-
